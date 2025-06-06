@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/common/landing_screen.dart';
+import 'views/common/landing_screen.dart'; 
 
 class HomeTweakApp extends StatelessWidget {
   const HomeTweakApp({super.key});
@@ -8,7 +8,7 @@ class HomeTweakApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'HomeTweak',
-      home: const LandingPage(),
+      home: const LandingPage(), 
     );
   }
 }
