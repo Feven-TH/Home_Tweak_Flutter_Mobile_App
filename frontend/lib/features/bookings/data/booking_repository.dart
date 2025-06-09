@@ -1,18 +1,17 @@
 import 'package:dio/dio.dart';
-import '../../models/booking_model.dart';
+import 'booking_model.dart';
+import '../../../../core/constants/api_endpoints.dart';
+import '../domain/booking_repository_interface.dart';
 
-
-class BookingRepository {
+class BookingRepositoryImpl implements IBookingRepository {
   final Dio _dio;
 
-  BookingRepository(this._dio);
+  BookingRepositoryImpl(this._dio);
 
-
-  /// Fetch bookings for a specific user filtered by status
- 
+  @override
   Future<List<Booking>> getBookingsByUserAndStatus(int userId, String status) async {
     try {
-      final response = await _dio.get('/bookings/user/$userId/$status');
+      final response = await _dio.get(ApiEndpoints.getBookingsByUserAndStatus(userId, status));
       final data = response.data as List;
       return data.map((json) => Booking.fromJson(json)).toList();
     } catch (e) {
@@ -20,30 +19,30 @@ class BookingRepository {
     }
   }
 
-  /// ✅ Create a new booking
-  Future<Booking> createBooking(Booking booking) async {
-    try {
-      final response = await _dio.post('/bookings', data: booking.toJson());
-      return Booking.fromJson(response.data);
-    } catch (e) {
-      throw Exception('Failed to create booking: $e');
-    }
+@override
+Future<Booking> createBooking(Booking booking) async {
+  try {
+    final response = await _dio.post(ApiEndpoints.createBooking, data: booking.toJson());
+    return Booking.fromJson(response.data['booking']); 
+  } catch (e) {
+    throw Exception('Failed to create booking: $e');
   }
+}
 
-  /// ✅ Cancel a booking by ID
+  @override
   Future<void> cancelBooking(int bookingId) async {
     try {
-      await _dio.put('/bookings/$bookingId/cancel');
+      await _dio.put(ApiEndpoints.cancelBooking(bookingId));
     } catch (e) {
       throw Exception('Failed to cancel booking: $e');
     }
   }
 
-  /// ✅ Reschedule an existing booking
+  @override
   Future<void> rescheduleBooking(int bookingId, DateTime newDate) async {
     try {
       await _dio.patch(
-        '/bookings/reschedule/$bookingId',
+        ApiEndpoints.rescheduleBooking(bookingId),
         data: {'serviceDate': newDate.toIso8601String()},
       );
     } catch (e) {
@@ -51,11 +50,11 @@ class BookingRepository {
     }
   }
 
-  /// ✅ Update status (e.g., to 'Completed', 'Cancelled')
+  @override
   Future<void> updateBookingStatus(int bookingId, String status) async {
     try {
       await _dio.put(
-        '/bookings/$bookingId/status',
+        ApiEndpoints.updateBookingStatus(bookingId),
         data: {'status': status},
       );
     } catch (e) {

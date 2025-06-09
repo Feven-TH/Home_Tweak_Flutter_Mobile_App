@@ -35,7 +35,7 @@ dev_dependencies:
   # Linting & formatting
   flutter_lints: ^5.0.0
 
-  # JSON codegen tools
+  # JSON & Freezed codegen tools
   build_runner: ^2.4.8
   freezed: ^2.5.2
   json_serializable: ^6.7.1
@@ -43,6 +43,10 @@ dev_dependencies:
   # Integration testing
   integration_test:
     sdk: flutter
+
+  # Mocking & Unit testing
+  mockito: ^5.4.2
+  test: ^1.25.2
 
 flutter:
   uses-material-design: true
@@ -55,4 +59,3 @@ flutter:
       fonts:
         - asset: assets/fonts/Inter_18pt-Regular.ttf
         - asset: assets/fonts/Inter_18pt-SemiBold.ttf
-
