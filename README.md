@@ -15,18 +15,18 @@ HomeTweak - Home Maintenance and Repair App (2025)
 ## **Description**
 HomeTweak is a **Flutter**-powered mobile application designed to connect homeowners with trusted professionals for various home maintenance and repair services. It enables users to book services, while service providers can list and manage their offerings seamlessly.
 
-This project follows the **MVVM (Model-View-ViewModel) architecture**, ensuring separation of concerns and maintainability. The state management solution used is **Riverpod**, and all API calls are handled using **Dio**.
+This project follows the **DDD(Domain-Driven Design) architecture**, ensuring separation of concerns and maintainability. The state management solution used is **Riverpod**, and all API calls are handled using **Dio**.
 
 ---
 
 ## **Tech Stack**
-- **Architecture:** MVVM  
+- **Architecture:** DDD  
 - **State Management:** Riverpod  
 - **API Calls:** Dio  
-- **Backend:** Node.js with Express *(minimal emphasis)*  
+- **Backend:** Node.js with Express 
 - **Testing:** Unit, Widget, and Integration Tests  
 
-## **Project Structure (MVVM)**
+## **Project Structure (DDD)**
 ---
 
 ## **Features**
