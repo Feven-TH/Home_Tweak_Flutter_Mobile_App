@@ -1,6 +1,6 @@
 name: frontend
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -12,7 +12,12 @@ dependencies:
 
   # UI essentials
   cupertino_icons: ^1.0.8
+  
+  #Date and time packages
 
+  intl: ^0.20.2  # Updated to latest version
+
+  
   # State management (MVVM-friendly)
   flutter_riverpod: ^2.5.1
   hooks_riverpod: ^2.5.1
@@ -59,3 +64,4 @@ flutter:
       fonts:
         - asset: assets/fonts/Inter_18pt-Regular.ttf
         - asset: assets/fonts/Inter_18pt-SemiBold.ttf
+        - asset: assets/fonts/Inter_18pt-Bold.ttf

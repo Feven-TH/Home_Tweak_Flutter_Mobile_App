@@ -44,4 +44,40 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
   );
+
+  //Added this missing styles
+  static const TextStyle headline1 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle headline2 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle headline3 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle headline4 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle headline5 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
 }

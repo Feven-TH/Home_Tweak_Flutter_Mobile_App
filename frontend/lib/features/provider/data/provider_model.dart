@@ -1,3 +1,4 @@
+// features/provider/data/provider_model.dart
 class Provider {
   final int id;
   final int userId;
@@ -6,44 +7,66 @@ class Provider {
   final String? location;
   final String? imageUrl;
   final String phoneNumber;
-  final String hourlyRate;
+  final double hourlyRate; 
   final int yearsOfExperience;
   final double? rating;
   final String? serviceDescription;
-  final String? username; // Added: Field for username from backend
-  final String? category; // Added: Field for category name from backend
+  final String? username; 
+  final String? category; 
 
   Provider({
     required this.id,
     required this.userId,
-    this.categoryId, 
+    this.categoryId,
     this.certificate,
     this.location,
     this.imageUrl,
     required this.phoneNumber,
-    required this.hourlyRate,
+    required this.hourlyRate, // Ensure type matches in constructor
     required this.yearsOfExperience,
     this.rating,
     this.serviceDescription,
-    this.username, // Added: Parameter for username
-    this.category, // Added: Parameter for category
+    this.username, 
+    this.category,
   });
 
-  factory Provider.fromJson(Map<String, dynamic> json) => Provider(
-        id: json['id'] as int,
-        userId: json['userId'] as int,
-        categoryId: json['categoryId'] as int?, // Changed: Read as nullable int
-        certificate: json['certificate'] as String?,
-        location: json['location'] as String?,
-        imageUrl: json['imageUrl'] as String?,
-        phoneNumber: json['phoneNumber'] as String,
-        hourlyRate: json['hourlyRate'] as String,
-        yearsOfExperience: json['yearsOfExperience'] as int,
-        rating: (json['rating'] as num?)?.toDouble(),
-        serviceDescription: json['serviceDescription'] as String?,
-        username: json['username'] as String?, // Added: Read username from JSON
-        category: json['category'] as String?, // Added: Read category from JSON
-      );
+  factory Provider.fromJson(Map<String, dynamic> json) {
+    // Helper function to safely parse a double
+    double? parseDouble(dynamic value) {
+      if (value is num) {
+        return value.toDouble();
+      } else if (value is String) {
+        return double.tryParse(value);
+      }
+      return null;
+    }
+
+    // Helper function to safely parse an int
+    int? parseInt(dynamic value) {
+      if (value is num) {
+        return value.toInt();
+      } else if (value is String) {
+        return int.tryParse(value);
+      }
+      return null;
+    }
+
+    return Provider(
+      id: json['id'] as int,
+      userId: json['userId'] as int,
+      categoryId: json['categoryId'] as int?,
+      certificate: json['certificate'] as String?,
+      location: json['location'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      phoneNumber: json['phoneNumber'] as String, 
+      hourlyRate: parseDouble(json['hourlyRate']) ?? 500.0, //  Default to 0.0 if parsing fails
+      yearsOfExperience: parseInt(json['yearsOfExperience']) ?? 2, // Default to 2 if parsing fails.
+      rating: (json['rating'] as num?)?.toDouble(),
+      serviceDescription: json['serviceDescription'] as String?,
+      username: json['username'] as String?,
+      category: json['category'] as String?,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -57,7 +80,7 @@ class Provider {
         'yearsOfExperience': yearsOfExperience,
         'rating': rating,
         'serviceDescription': serviceDescription,
-        'username': username, // Added: Include username in toJson
-        'category': category, // Added: Include category in toJson
+        'username': username,
+        'category': category,
       };
 }
