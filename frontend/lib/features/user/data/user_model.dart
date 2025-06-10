@@ -1,5 +1,6 @@
 class UserModel {
-  final int id;
+  final int? userId;
+  final String? token;
   final String username;
   final String email;
   final String role;
@@ -7,7 +8,8 @@ class UserModel {
   final bool isLoggedIn;
 
   UserModel({
-    required this.id,
+    this.userId,
+    this.token,
     required this.username,
     required this.email,
     required this.role,
@@ -16,7 +18,8 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'],
+        userId: json['userId'],
+        token: json['token'],
         username: json['username'],
         email: json['email'],
         role: json['role'],
@@ -25,7 +28,8 @@ class UserModel {
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
+        'userId': userId,
+        'token': token,
         'username': username,
         'email': email,
         'role': role,

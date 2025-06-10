@@ -6,16 +6,18 @@ class ApiEndpoints {
   // Auth
   static const String login = '/users/login';
   static const String signup = '/users/register';
-  static const String deleteAccount = '/users/delete';
+  static String deleteAccount(int id) => '/users/delete/$id';
   static const String forgotPassword = '/users/forgot-password';
   static const String resetPassword = '/users/reset-password';
-  static const String logout = '/users/logout';
+  static String logout(int id) => '/users/logout/$id';
 
   // Users
   static String getUserById(int id) => '/users/$id';
+  static const String updateUser(int id) => '/users/$id';
 
   // Providers
-  static const String createProvider = '/';
+  static const String createProvider = '/providers';
+  static const String updateProvider(int id) => '/providers/$id';
   static const String getAllProviders = '/providers';
   static String getProvidersByCategory(int categoryId) => '/providers/category/$categoryId';
   static const String searchProvidersByName = '$baseUrl/providers/search';
