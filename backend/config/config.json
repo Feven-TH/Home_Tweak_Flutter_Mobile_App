@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "haset",
+    "password": "DB_USER", 
+    "database": "my_sql",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": 3306
+  }
+}
