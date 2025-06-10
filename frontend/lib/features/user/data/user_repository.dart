@@ -9,7 +9,7 @@ class UserRepository implements UserRepositoryInterface {
   UserRepository(this._dio);
 
   @override
-  Future<UserModel> signup(Map<String, dynamic> userData) async {
+  Future<UserModel> signUp(Map<String, dynamic> userData) async {
     try {
       final response = await _dio.post(ApiEndpoints.signup, data: userData);
       return UserModel.fromJson(response.data);

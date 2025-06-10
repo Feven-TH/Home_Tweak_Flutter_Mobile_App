@@ -21,8 +21,24 @@ final loginUserProvider = Provider((ref) {
   return LoginUser(ref.watch(userRepositoryProvider));
 });
 
+final forgotPasswordProvider = Provider((ref) {
+  return ForgotPassword(ref.watch(userRepositoryProvider));
+});
+
+final resetPasswordProvider = Provider((ref) {
+  return ResetPassword(ref.watch(userRepositoryProvider));
+});
+
 final getUserByIdProvider = Provider((ref) {
   return GetUserById(ref.watch(userRepositoryProvider));
+});
+
+final deleteUserProvider = Provider((ref) {
+  return DeleteUser(ref.watch(userRepositoryProvider));
+});
+
+final logoutUserProvider = Provider((ref) {
+  return LogoutUser(ref.watch(userRepositoryProvider));
 });
 
 // StateNotifierProvider for UserNotifier
@@ -30,6 +46,10 @@ final userNotifierProvider = StateNotifierProvider<UserNotifier, UserState>((ref
   return UserNotifier(
     signUpUser: ref.watch(signUpUserProvider),
     loginUser: ref.watch(loginUserProvider),
+    forgotPassword: ref.watch(forgotPasswordProvider),
+    resetPassword: ref.watch(resetPasswordProvider),
     getUserById: ref.watch(getUserByIdProvider),
+    deleteUser: ref.watch(deleteUserProvider),
+    logoutUser: ref.watch(logoutUserProvider),
   );
 });
