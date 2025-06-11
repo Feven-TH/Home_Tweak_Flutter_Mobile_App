@@ -1,3 +1,6 @@
+// This test ensures that the booking status is updated correctly
+// using the UpdateBookingStatus use case with a mocked repository.
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:frontend/features/bookings/domain/booking_repository_interface.dart';
@@ -14,15 +17,23 @@ void main() {
     useCase = UpdateBookingStatus(mockRepository);
   });
 
-  test('should update booking status', () async {
+  test('should successfully update the status of a booking', () async {
     const bookingId = 1;
-    const newStatus = 'Completed';
+    const statusToUpdate = 'Completed';
 
-    when(mockRepository.updateBookingStatus(bookingId, newStatus))
-        .thenAnswer((_) async {});  // <-- Proper Future<void> stub
+    when(
+      mockRepository.updateBookingStatus(bookingId, statusToUpdate),
+    ).thenAnswer((_) async {});
 
-    await useCase.call(bookingId, newStatus);
+    await useCase.call(bookingId, statusToUpdate);
 
-    verify(mockRepository.updateBookingStatus(bookingId, newStatus)).called(1);
+    verify(
+      mockRepository.updateBookingStatus(bookingId, statusToUpdate),
+    ).called(1);
+
+    expectLater(
+      () async => await useCase.call(bookingId, statusToUpdate),
+      returnsNormally,
+    );
   });
 }
