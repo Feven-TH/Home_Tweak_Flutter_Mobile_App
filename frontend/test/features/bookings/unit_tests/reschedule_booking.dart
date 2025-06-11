@@ -1,3 +1,6 @@
+// This test verifies that the RescheduleBooking use case correctly
+// delegates the booking rescheduling logic to the repository.
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:frontend/features/bookings/domain/booking_repository_interface.dart';
@@ -14,15 +17,24 @@ void main() {
     useCase = RescheduleBooking(mockRepository);
   });
 
-  test('should reschedule booking to new date', () async {
-    const bookingId = 1;
-    final newDate = DateTime(2025, 6, 10);
+  test(
+    'should properly reschedule a booking to the specified new date',
+    () async {
+      const bookingId = 1;
+      final targetDate = DateTime(2025, 6, 10);
 
-    when(mockRepository.rescheduleBooking(bookingId, newDate))
-        .thenAnswer((_) async {});  // <-- Proper Future<void> stub
+      when(
+        mockRepository.rescheduleBooking(bookingId, targetDate),
+      ).thenAnswer((_) async {});
 
-    await useCase.call(bookingId, newDate);
+      await useCase.call(bookingId, targetDate);
 
-    verify(mockRepository.rescheduleBooking(bookingId, newDate)).called(1);
-  });
+      verify(mockRepository.rescheduleBooking(bookingId, targetDate)).called(1);
+
+      expectLater(
+        () async => await useCase.call(bookingId, targetDate),
+        returnsNormally,
+      );
+    },
+  );
 }
