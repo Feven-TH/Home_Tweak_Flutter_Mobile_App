@@ -42,7 +42,7 @@ class _FakeIProviderRepository_0 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
-class _FakeProvider_1 extends _i1.SmartFake implements _i3.Provider {
+class _FakeProvider_1 extends _i1.SmartFake implements _i3.ServiceProvider {
   _FakeProvider_1(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
@@ -67,12 +67,12 @@ class MockGetAllProviders extends _i1.Mock implements _i4.GetAllProviders {
           as _i2.IProviderRepository);
 
   @override
-  _i5.Future<List<_i3.Provider>> call() =>
+  _i5.Future<List<_i3.ServiceProvider>> call() =>
       (super.noSuchMethod(
             Invocation.method(#call, []),
-            returnValue: _i5.Future<List<_i3.Provider>>.value(<_i3.Provider>[]),
+            returnValue: _i5.Future<List<_i3.ServiceProvider>>.value(<_i3.ServiceProvider>[]),
           )
-          as _i5.Future<List<_i3.Provider>>);
+          as _i5.Future<List<_i3.ServiceProvider>>);
 }
 
 /// A class which mocks [GetProvidersByCategory].
@@ -96,12 +96,12 @@ class MockGetProvidersByCategory extends _i1.Mock
           as _i2.IProviderRepository);
 
   @override
-  _i5.Future<List<_i3.Provider>> call(int? categoryId) =>
+  _i5.Future<List<_i3.ServiceProvider>> call(int? categoryId) =>
       (super.noSuchMethod(
             Invocation.method(#call, [categoryId]),
-            returnValue: _i5.Future<List<_i3.Provider>>.value(<_i3.Provider>[]),
+            returnValue: _i5.Future<List<_i3.ServiceProvider>>.value(<_i3.ServiceProvider>[]),
           )
-          as _i5.Future<List<_i3.Provider>>);
+          as _i5.Future<List<_i3.ServiceProvider>>);
 }
 
 /// A class which mocks [GetProviderDetails].
@@ -125,14 +125,14 @@ class MockGetProviderDetails extends _i1.Mock
           as _i2.IProviderRepository);
 
   @override
-  _i5.Future<_i3.Provider> call(int? providerId) =>
+  _i5.Future<_i3.ServiceProvider> call(int? providerId) =>
       (super.noSuchMethod(
             Invocation.method(#call, [providerId]),
-            returnValue: _i5.Future<_i3.Provider>.value(
+            returnValue: _i5.Future<_i3.ServiceProvider>.value(
               _FakeProvider_1(this, Invocation.method(#call, [providerId])),
             ),
           )
-          as _i5.Future<_i3.Provider>);
+          as _i5.Future<_i3.ServiceProvider>);
 }
 
 /// A class which mocks [SearchProvidersByName].
@@ -156,12 +156,12 @@ class MockSearchProvidersByName extends _i1.Mock
           as _i2.IProviderRepository);
 
   @override
-  _i5.Future<List<_i3.Provider>> call(String? query) =>
+  _i5.Future<List<_i3.ServiceProvider>> call(String? query) =>
       (super.noSuchMethod(
             Invocation.method(#call, [query]),
-            returnValue: _i5.Future<List<_i3.Provider>>.value(<_i3.Provider>[]),
+            returnValue: _i5.Future<List<_i3.ServiceProvider>>.value(<_i3.ServiceProvider>[]),
           )
-          as _i5.Future<List<_i3.Provider>>);
+          as _i5.Future<List<_i3.ServiceProvider>>);
 }
 
 /// A class which mocks [CreateProvider].

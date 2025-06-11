@@ -6,7 +6,7 @@ class UpdateProvider {
 
   UpdateProvider(this.repository);
 
-  Future<Provider> call(int id, Provider provider) {
+  Future<ServiceProvider> call(int id, ServiceProvider provider) {
     return repository.updateProvider(id, provider);
   }
 }

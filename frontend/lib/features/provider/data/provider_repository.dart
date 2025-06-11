@@ -9,59 +9,59 @@ class ProviderRepository implements IProviderRepository {
   ProviderRepository(this._dio);
 
   @override
-  Future<Provider> createProvider(Provider provider) async {
+  Future<ServiceProvider> createProvider(ServiceProvider provider) async {
     try {
       final response = await _dio.post(
         ApiEndpoints.createProvider,
         data: provider.toJson(),
       );
-      return Provider.fromJson(response.data);
+      return ServiceProvider.fromJson(response.data);
     } catch (e) {
       throw Exception('Failed to create provider: $e');
     }
   }
 
   @override
-  Future<Provider> updateProvider(int id, Provider provider) async {
+  Future<ServiceProvider> updateProvider(int id, ServiceProvider provider) async {
     try {
       final response = await _dio.put(
         ApiEndpoints.updateProvider(id),
         data: provider.toJson(),
       );
-      return Provider.fromJson(response.data);
+      return ServiceProvider.fromJson(response.data);
     } catch (e) {
       throw Exception('Failed to update provider: $e');
     }
   }
 
   @override
-  Future<List<Provider>> getAllProviders() async {
+  Future<List<ServiceProvider>> getAllProviders() async {
     try {
       final response = await _dio.get(ApiEndpoints.getAllProviders);
       final List data = response.data;
-      return data.map((json) => Provider.fromJson(json)).toList();
+      return data.map((json) => ServiceProvider.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to load providers: $e');
     }
   }
 
   @override
-  Future<List<Provider>> getProvidersByCategory(int categoryId) async {
+  Future<List<ServiceProvider>> getProvidersByCategory(int categoryId) async {
     try {
       final response = await _dio.get(ApiEndpoints.getProvidersByCategory(categoryId));
       final List data = response.data;
-      return data.map((json) => Provider.fromJson(json)).toList();
+      return data.map((json) => ServiceProvider.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to load providers by category: $e');
     }
   }
 
     @override
-  Future<Provider> getProviderDetails(int providerId) async {
+  Future<ServiceProvider> getProviderDetails(int providerId) async {
     try {
       // Use the new getProviderById endpoint
       final response = await _dio.get(ApiEndpoints.getProviderById(providerId));
-      return Provider.fromJson(response.data);
+      return ServiceProvider.fromJson(response.data);
     } catch (e) {
       throw Exception('Failed to load provider details: $e');
     }
@@ -69,11 +69,11 @@ class ProviderRepository implements IProviderRepository {
 
 
  @override  
-  Future<List<Provider>> searchProvidersByName(String query) async {
+  Future<List<ServiceProvider>> searchProvidersByName(String query) async {
     try {
       final response = await _dio.get('${ApiEndpoints.searchProvidersByName}?name=$query');
       final List data = response.data;
-      return data.map((json) => Provider.fromJson(json)).toList();
+      return data.map((json) => ServiceProvider.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to search providers: $e');
     }

@@ -18,7 +18,7 @@ class LandingPage extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: Image.asset(
-                'assets/images/home_tweak_logo.jpg', // make sure this asset exists
+                'assets/images/home_tweak.jpg', // make sure this asset exists
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,

@@ -6,7 +6,7 @@ class GetProviderDetails {
 
   GetProviderDetails(this.repository);
 
-  Future<Provider> call(int providerId) {
+  Future<ServiceProvider> call(int providerId) {
     return repository.getProviderDetails(providerId);
   }
 }

@@ -61,7 +61,7 @@ class _FinishSigningUpScreenState extends ConsumerState<FinishSigningUpScreen> {
     // Validate all form fields
     if (_formKey.currentState?.validate() ?? false) {
       // Create a Provider object from the current form data
-      final newProvider = models.Provider(
+      final newProvider = models.ServiceProvider(
         // Mapping UI fields to models.Provider fields
         id: 0, // Placeholder: id is required in your model, usually set by backend.
         userId: 0, // Placeholder: userId is required in your model, usually set during auth.

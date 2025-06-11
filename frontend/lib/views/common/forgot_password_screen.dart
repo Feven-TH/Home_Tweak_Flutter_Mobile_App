@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../features/user/presentation/user_provider.dart';
 
@@ -97,6 +98,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                       : () async {
                     if (_formKey.currentState!.validate()) {
                       await notifier.sendPasswordResetCode(_emailController.text.trim());
+                      if (ref.read(userNotifierProvider).error == null) {
+                        if (mounted) {
+                          context.push('/reset-password');
+                        }
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

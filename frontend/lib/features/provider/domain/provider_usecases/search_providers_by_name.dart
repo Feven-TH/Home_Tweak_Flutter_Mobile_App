@@ -6,7 +6,7 @@ class SearchProvidersByName {
 
   SearchProvidersByName(this.repository);
 
-  Future<List<Provider>> call(String query) {
+  Future<List<ServiceProvider>> call(String query) {
     return repository.searchProvidersByName(query);
   }
 }

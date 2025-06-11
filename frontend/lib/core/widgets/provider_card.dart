@@ -5,7 +5,7 @@ import 'package:frontend/core/theme/app_text_style.dart';
 import 'package:frontend/features/provider/data/provider_model.dart'; 
 
 class ProviderCard extends StatelessWidget {
-  final Provider provider;
+  final ServiceProvider provider;
   final VoidCallback onDetailsTap;
 
   const ProviderCard({

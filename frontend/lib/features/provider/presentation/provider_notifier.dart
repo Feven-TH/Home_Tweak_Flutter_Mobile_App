@@ -5,7 +5,7 @@ import '../domain/provider_usecases/update_provider.dart';
 import '../domain/provider_usecases/get_providers_by_category.dart';
 import '../domain/provider_usecases/get_provider_details.dart';
 import '../domain/provider_usecases/search_providers_by_name.dart';
-import '../../provider/data/provider_model.dart' as models;
+import '../../provider/data/provider_model.dart';
 import 'provider_state.dart';
 
 
@@ -30,7 +30,7 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
   Future<void> createNewProvider(Provider provider) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final newProvider = await createProvider(provider as models.Provider);
+      final newProvider = await createProvider(Provider as ServiceProvider);
       state = state.copyWith(
         providers: [...state.providers, newProvider],
         isLoading: false,
@@ -47,7 +47,7 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
   Future<void> updateExistingProvider(int providerId, Provider provider) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final updatedProvider = await updateProvider(providerId, provider as models.Provider);
+      final updatedProvider = await updateProvider(providerId, Provider as ServiceProvider);
       state = state.copyWith(
         providers: state.providers.map((p) =>
         p.id == providerId ? updatedProvider : p

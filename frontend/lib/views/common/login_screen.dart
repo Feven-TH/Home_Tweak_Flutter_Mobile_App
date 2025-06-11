@@ -34,7 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(height: 40),
-              Image.asset('assets/images/home_tweak_logo.jpg', height: 150),
+              Image.asset('assets/images/home_tweak.jpg', height: 150),
               const SizedBox(height: 16),
               const Text("Login", style: TextStyle(color: Color(0xFF04285E), fontSize: 36, fontWeight: FontWeight.bold)),
               const SizedBox(height: 32),

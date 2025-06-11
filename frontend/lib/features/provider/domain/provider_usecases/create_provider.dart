@@ -6,7 +6,7 @@ class CreateProvider {
 
   CreateProvider(this.repository);
 
-  Future<Provider> call(Provider provider) {
+  Future<ServiceProvider> call(ServiceProvider provider) {
     return repository.createProvider(provider);
   }
 }

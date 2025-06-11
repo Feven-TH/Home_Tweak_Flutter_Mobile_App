@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  go_router: ^14.1.0
   # UI essentials
   cupertino_icons: ^1.0.8
   
@@ -57,7 +57,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/home_tweak.jpg
+    - assets/images/hometweak.png
 
   fonts:
     - family: Inter

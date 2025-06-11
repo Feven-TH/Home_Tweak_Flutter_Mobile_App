@@ -8,6 +8,7 @@ import 'package:frontend/features/provider/presentation/provider_state.dart';
 import 'package:frontend/core/widgets/category_item.dart';
 import 'package:frontend/core/widgets/provider_card.dart';
 import 'package:frontend/views/customer/book_service_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class Category {
   final int id;
@@ -52,6 +53,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  // Navigation methods
+  void _navigateToBookService(int providerId) {
+    context.push('/book-service/$providerId');
+  }
+
+  void _navigateToMyBookings() {
+    context.push('/my-bookings');
+  }
+
+  void _navigateToCustomerProfile() {
+    context.push('/customer-profile');
   }
 
   @override

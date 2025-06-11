@@ -12,20 +12,20 @@ void main() {
 
     test('Fetch all providers returns non-empty list', () async {
       final providers = await repository.getAllProviders();
-      expect(providers, isA<List<Provider>>());
+      expect(providers, isA<List<ServiceProvider>>());
       expect(providers.isNotEmpty, true, reason: 'Provider list should not be empty');
     });
 
     test('Fetch providers by category returns list', () async {
       final categoryId = 1; // Replace with an actual categoryId in your backend
       final providers = await repository.getProvidersByCategory(categoryId);
-      expect(providers, isA<List<Provider>>());
+      expect(providers, isA<List<ServiceProvider>>());
     });
 
     test('Fetch single provider details returns a valid Provider', () async {
       final providerId = 1; // Replace with an actual providerId from your backend
       final provider = await repository.getProviderDetails(providerId);
-      expect(provider, isA<Provider>());
+      expect(provider, isA<ServiceProvider>());
       expect(provider.id, equals(providerId));
     });
 

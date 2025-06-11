@@ -1,6 +1,7 @@
 // lib/screens/provider_dashboard_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 // Import your existing files
 import '../../core/theme/app_colors.dart';         // Your AppColors definitions
@@ -33,31 +34,36 @@ class _ProviderDashboardScreenState extends ConsumerState<ProviderDashboardScree
     await ref.read(bookingNotifierProvider.notifier).loadBookingsByProvider(widget.providerId);
   }
 
+  // Navigation methods
+  void _navigateToFinishSignUp() {
+    context.push('/finish-signup', extra: {
+      'providerId': widget.providerId,
+      'isServiceProvider': true,
+    });
+  }
+
+  void _navigateToProviderProfile() {
+    context.push('/provider-profile/${widget.providerId}');
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Watch the bookingState to rebuild the UI when the data or loading status changes
     final bookingState = ref.watch(bookingNotifierProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.background, // Sets the background color of the whole screen
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text(
           'Dashboard',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: AppColors.accent, // Sets the app bar background color to accent
+        backgroundColor: AppColors.accent,
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle, color: Colors.white, size: 28), // Profiles logo
-            onPressed: () {
-              // TODO: Implement navigation to profile page
-              print('Navigate to profile page');
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Profile page navigation not implemented yet!')),
-              );
-            },
+            icon: const Icon(Icons.account_circle, color: Colors.white, size: 28),
+            onPressed: _navigateToProviderProfile, // Updated to use new method
           ),
-          const SizedBox(width: 8), // Adds some spacing to the right of the icon
+          const SizedBox(width: 8),
         ],
       ),
       body: Column(
@@ -65,30 +71,34 @@ class _ProviderDashboardScreenState extends ConsumerState<ProviderDashboardScree
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-            child: Text(
-              'Welcome back!', // "Welcome back" text
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Welcome back!',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: _navigateToFinishSignUp,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'Complete Profile',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Text(
-              'My Bookings', // "My Bookings" text
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ),
-          Expanded(
-            // Handles loading, error, empty states, and displays the list of bookings
-            child: _buildBody(bookingState),
-          ),
+          // ... (rest of your existing body code)
         ],
       ),
     );

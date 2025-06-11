@@ -1,10 +1,10 @@
 import '../data/provider_model.dart';
 
 abstract class IProviderRepository {
-  Future<Provider> createProvider(Provider provider);
-  Future<Provider> updateProvider(int id, Provider provider);
-  Future<List<Provider>> getAllProviders();
-  Future<List<Provider>> getProvidersByCategory(int categoryId);
-  Future<Provider> getProviderDetails(int providerId);
-  Future<List<Provider>> searchProvidersByName(String query);
+  Future<ServiceProvider> createProvider(ServiceProvider provider);
+  Future<ServiceProvider> updateProvider(int id, ServiceProvider provider);
+  Future<List<ServiceProvider>> getAllProviders();
+  Future<List<ServiceProvider>> getProvidersByCategory(int categoryId);
+  Future<ServiceProvider> getProviderDetails(int providerId);
+  Future<List<ServiceProvider>> searchProvidersByName(String query);
 }

@@ -6,7 +6,7 @@ class GetAllProviders {
 
   GetAllProviders(this.repository);
 
-  Future<List<Provider>> call() {
+  Future<List<ServiceProvider>> call() {
     return repository.getAllProviders();
   }
 }

@@ -2,8 +2,8 @@ import '../data/provider_model.dart';
 
 class ProviderState {
   final bool isLoading;
-  final List<Provider> providers;
-  final Provider? selectedProvider;
+  final List<ServiceProvider> providers;
+  final ServiceProvider? selectedProvider;
   final String? errorMessage;
 
   const ProviderState({
@@ -15,8 +15,8 @@ class ProviderState {
 
   ProviderState copyWith({
     bool? isLoading,
-    List<Provider>? providers,
-    Provider? selectedProvider,
+    List<ServiceProvider>? providers,
+    ServiceProvider? selectedProvider,
     String? errorMessage,
   }) {
     return ProviderState(

@@ -6,7 +6,7 @@ class GetProvidersByCategory {
 
   GetProvidersByCategory(this.repository);
 
-  Future<List<Provider>> call(int categoryId) {
+  Future<List<ServiceProvider>> call(int categoryId) {
     return repository.getProvidersByCategory(categoryId);
   }
 }
