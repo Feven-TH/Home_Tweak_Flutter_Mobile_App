@@ -25,7 +25,7 @@ class ProviderRepository implements IProviderRepository {
   Future<Provider> updateProvider(int id, Provider provider) async {
     try {
       final response = await _dio.put(
-        ApiEndpoints.updateProvider,
+        ApiEndpoints.updateProvider(id),
         data: provider.toJson(),
       );
       return Provider.fromJson(response.data);

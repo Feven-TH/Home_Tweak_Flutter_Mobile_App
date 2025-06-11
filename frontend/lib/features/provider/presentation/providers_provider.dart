@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import '../../../core/dio_client.dart';
 import '../data/provider_repository.dart';
 import '../domain/provider_repository_interface.dart';
+import '../domain/provider_usecases/create_provider.dart';
+import '../domain/provider_usecases/update_provider.dart';
 import 'provider_notifier.dart';
 import 'provider_state.dart';
 

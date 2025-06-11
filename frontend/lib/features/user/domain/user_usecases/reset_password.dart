@@ -5,15 +5,7 @@ class ResetPassword {
 
   ResetPassword(this.repository);
 
-  Future<void> call(
-      String email,
-      String resetCode,
-      String newPassword,
-      ) {
-    return repository.resetPassword(
-      email: email,
-      resetCode: resetCode,
-      newPassword: newPassword,
-    );
+  Future<void> call(String email, String resetCode, String newPassword) {
+    return repository.resetPassword(email, resetCode, newPassword);
   }
 }

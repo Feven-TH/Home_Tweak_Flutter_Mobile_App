@@ -5,6 +5,7 @@ import '../domain/provider_usecases/update_provider.dart';
 import '../domain/provider_usecases/get_providers_by_category.dart';
 import '../domain/provider_usecases/get_provider_details.dart';
 import '../domain/provider_usecases/search_providers_by_name.dart';
+import '../../provider/data/provider_model.dart' as models;
 import 'provider_state.dart';
 
 
@@ -29,15 +30,36 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
   Future<void> createNewProvider(Provider provider) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final newProvider = await createProvider(provider);
+      final newProvider = await createProvider(provider as models.Provider);
       state = state.copyWith(
         providers: [...state.providers, newProvider],
         isLoading: false,
-        successMessage: 'Provider created successfully',
       );
     } catch (e) {
       state = state.copyWith(
         errorMessage: 'Failed to create provider: ${e.toString()}',
+        isLoading: false,
+      );
+    }
+  }
+
+  // Update an existing provider
+  Future<void> updateExistingProvider(int providerId, Provider provider) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    try {
+      final updatedProvider = await updateProvider(providerId, provider as models.Provider);
+      state = state.copyWith(
+        providers: state.providers.map((p) =>
+        p.id == providerId ? updatedProvider : p
+        ).toList(),
+        selectedProvider: state.selectedProvider?.id == providerId
+            ? updatedProvider
+            : state.selectedProvider,
+        isLoading: false,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        errorMessage: 'Failed to update provider: ${e.toString()}',
         isLoading: false,
       );
     }
@@ -62,29 +84,6 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
       state = state.copyWith(providers: providers, isLoading: false);
     } catch (e) {
       state = state.copyWith(errorMessage: e.toString(), isLoading: false);
-    }
-  }
-
-  /// Update an existing provider
-  Future<void> updateExistingProvider(int providerId, Provider provider) async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-    try {
-      final updatedProvider = await updateProvider(providerId, provider);
-      state = state.copyWith(
-        providers: state.providers.map((p) =>
-        p.id == providerId ? updatedProvider : p
-        ).toList(),
-        selectedProvider: state.selectedProvider?.id == providerId
-            ? updatedProvider
-            : state.selectedProvider,
-        isLoading: false,
-        successMessage: 'Provider updated successfully',
-      );
-    } catch (e) {
-      state = state.copyWith(
-        errorMessage: 'Failed to update provider: ${e.toString()}',
-        isLoading: false,
-      );
     }
   }
 
