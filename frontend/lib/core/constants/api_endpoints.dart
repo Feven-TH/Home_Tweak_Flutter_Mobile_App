@@ -4,14 +4,20 @@ class ApiEndpoints {
   static const String baseUrl = 'http://localhost:5000'; // backend base
 
   // Auth
-  static const String login = '/auth/login';
-  static const String signup = '/auth/signup';
-  static const String deleteAccount = '/auth/delete';
+  static const String login = '/users/login';
+  static const String signup = '/users/register';
+  static String deleteAccount(int id) => '/users/delete/$id';
+  static const String forgotPassword = '/users/forgot-password';
+  static const String resetPassword = '/users/reset-password';
+  static String logout(int id) => '/users/logout/$id';
 
   // Users
   static String getUserById(int id) => '/users/$id';
+  static String updateUser(int id) => '/users/$id';
 
   // Providers
+  static const String createProvider = '/providers';
+  static String updateProvider(int id) => '/providers/$id';
   static const String getAllProviders = '/providers';
   static String getProvidersByCategory(int categoryId) => '/providers/category/$categoryId';
   static const String searchProvidersByName = '$baseUrl/providers/search';
