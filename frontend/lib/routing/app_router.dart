@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/user/presentation/user_provider.dart';
 import '../views/common/forgot_password_screen.dart';
+import '../views/common/landing_screen.dart';
 import '../views/common/login_screen.dart';
 import '../views/common/reset_password_screen.dart';
 import '../views/common/signup_screen.dart';
@@ -39,6 +40,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => LandingPage(),
+      ),
       GoRoute(
         path: '/login',
         builder: (context, state) => LoginScreen(
@@ -90,10 +95,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/finish-signup',
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
-          return FinishSigningUpScreen(
-            providerId: args['providerId'] as int,
-            isServiceProvider: args['isServiceProvider'] as bool,
-          );
+          return FinishSigningUpScreen();
         },
       ),
       GoRoute(
