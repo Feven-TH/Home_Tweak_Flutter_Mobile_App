@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import '../../../core/dio_client.dart';
 import '../data/provider_repository.dart';
 import '../domain/provider_repository_interface.dart';
+import '../domain/provider_usecases/create_provider.dart';
+import '../domain/provider_usecases/update_provider.dart';
 import 'provider_notifier.dart';
 import 'provider_state.dart';
 
@@ -21,8 +23,16 @@ final providerRepositoryProvider = Provider<IProviderRepository>((ref) {
 });
 
 // UseCase Providers
+final createProviderUseCaseProvider = Provider<CreateProvider>((ref) {
+  return CreateProvider(ref.watch(providerRepositoryProvider));
+});
+
 final getAllProvidersUseCaseProvider = Provider<GetAllProviders>((ref) {
   return GetAllProviders(ref.watch(providerRepositoryProvider));
+});
+
+final updateProviderUseCaseProvider = Provider<UpdateProvider>((ref) {
+  return UpdateProvider(ref.watch(providerRepositoryProvider));
 });
 
 final getProvidersByCategoryUseCaseProvider = Provider<GetProvidersByCategory>((ref) {
@@ -41,7 +51,9 @@ final searchProvidersByNameUseCaseProvider = Provider<SearchProvidersByName>((re
 final providerNotifierProvider =
     StateNotifierProvider<ProviderNotifier, ProviderState>((ref) {
   return ProviderNotifier(
+    createProvider: ref.watch(createProviderUseCaseProvider),
     getAllProviders: ref.watch(getAllProvidersUseCaseProvider),
+    updateProvider: ref.watch(updateProviderUseCaseProvider),
     getProvidersByCategory: ref.watch(getProvidersByCategoryUseCaseProvider),
     getProviderDetails: ref.watch(getProviderDetailsUseCaseProvider),
     searchProvidersByName: ref.watch(searchProvidersByNameUseCaseProvider),

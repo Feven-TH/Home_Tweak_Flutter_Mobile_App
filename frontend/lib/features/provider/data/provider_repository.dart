@@ -9,6 +9,32 @@ class ProviderRepository implements IProviderRepository {
   ProviderRepository(this._dio);
 
   @override
+  Future<Provider> createProvider(Provider provider) async {
+    try {
+      final response = await _dio.post(
+        ApiEndpoints.createProvider,
+        data: provider.toJson(),
+      );
+      return Provider.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to create provider: $e');
+    }
+  }
+
+  @override
+  Future<Provider> updateProvider(int id, Provider provider) async {
+    try {
+      final response = await _dio.put(
+        ApiEndpoints.updateProvider(id),
+        data: provider.toJson(),
+      );
+      return Provider.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to update provider: $e');
+    }
+  }
+
+  @override
   Future<List<Provider>> getAllProviders() async {
     try {
       final response = await _dio.get(ApiEndpoints.getAllProviders);
