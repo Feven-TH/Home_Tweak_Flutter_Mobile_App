@@ -1,13 +1,14 @@
+// user/presentation/user_notifier.dart
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../domain/user_usecases/signup.dart';
-import '../domain/user_usecases/login.dart';
-import '../domain/user_usecases/forgot_password.dart';
-import '../domain/user_usecases/reset_password.dart';
-import '../domain/user_usecases/getUserById.dart';
-import '../domain/user_usecases/logout.dart';
-import '../domain/user_usecases/delete_user.dart';
-import '../domain/user_usecases/update_user.dart';
-import '../data/user_model.dart';
+import '../../domain/user_usecases/signup.dart';
+import '../../domain/user_usecases/login.dart';
+import '../../domain/user_usecases/forgot_password.dart';
+import '../../domain/user_usecases/reset_password.dart';
+import '../../domain/user_usecases/getUserById.dart';
+import '../../domain/user_usecases/logout.dart';
+import '../../domain/user_usecases/delete_user.dart';
+import '../../data/user_model.dart';
 import 'user_state.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
@@ -16,17 +17,15 @@ class UserNotifier extends StateNotifier<UserState> {
   final ForgotPassword forgotPassword;
   final ResetPassword resetPassword;
   final GetUserById getUserById;
-  final UpdateUser updateUser;
   final DeleteUser deleteUser;
   final LogoutUser logoutUser;
 
   UserNotifier({
     required this.signUpUser,
     required this.loginUser,
-    required this.forgotPassword,
+    required this.forgotPasword,
     required this.resetPassword,
     required this.getUserById,
-    required this.updateUser,
     required this.logoutUser,
     required this.deleteUser,
   }) : super(UserState());
@@ -35,7 +34,8 @@ class UserNotifier extends StateNotifier<UserState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await signUpUser.call(username, email, password, role);
-      final user = await getUserById.call(result.userId!); // ensure userId is not null
+      final userId = result['userId'];
+      final user = await getUserById.call(userId);
       state = state.copyWith(user: user, isLoading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
@@ -46,8 +46,8 @@ class UserNotifier extends StateNotifier<UserState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await loginUser.call(email, password);
-      final userId = result.userId; // assuming `LoginResponse` or model has userId field
-      final user = await getUserById.call(userId!);
+      final userId = result['userId'];
+      final user = await getUserById.call(userId);
       state = state.copyWith(user: user, isLoading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
@@ -58,7 +58,10 @@ class UserNotifier extends StateNotifier<UserState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await forgotPassword.call(email);
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(
+        isLoading: false,
+        successMessage: 'Password reset code sent to your email',
+      );
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
@@ -68,7 +71,10 @@ class UserNotifier extends StateNotifier<UserState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await resetPassword.call(email, resetCode, newPassword);
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(
+        isLoading: false,
+        successMessage: 'Password reset successfully',
+      );
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
@@ -84,40 +90,33 @@ class UserNotifier extends StateNotifier<UserState> {
     }
   }
 
-  Future<void> updateUserProfile({
-    required int id,
-    required UserModel user,
-  }) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final updatedUser = await updateUser.call(id, user);
-      state = state.copyWith(user: updatedUser, isLoading: false);
-    } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
-    }
-  }
-
   Future<void> deleteUserAccount(int userId) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await deleteUser.call(userId);
-      state = UserState().copyWith(isLoading: false);
+      state = UserState().copyWith(
+        isLoading: false,
+        successMessage: 'Account deleted successfully',
+      );
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }
 
-  Future<void> logout(int userId) async {
+  Future<void> logoutUser(int userId) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await logoutUser.call(userId);
-      state = UserState().copyWith(isLoading: false);
+      state = UserState().copyWith(
+        isLoading: false,
+        successMessage: 'Logged out successfully',
+      );
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }
 
-  void clearMessages() {
-    state = state.copyWith(error: null, successMessage: null);
+  void logout() {
+    state = UserState(); // Clear user and reset
   }
 }

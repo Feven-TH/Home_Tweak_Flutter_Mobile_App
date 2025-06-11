@@ -1,21 +1,15 @@
-import 'package:dio/src/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/dio_client.dart';
-import '../data/user_repository.dart';
-import '../domain/user_usecases/delete_user.dart';
-import '../domain/user_usecases/forgot_password.dart';
-import '../domain/user_usecases/getUserById.dart';
-import '../domain/user_usecases/login.dart';
-import '../domain/user_usecases/logout.dart';
-import '../domain/user_usecases/reset_password.dart';
-import '../domain/user_usecases/signup.dart';
-import '../domain/user_usecases/update_user.dart';
+import '../../data/user_repository.dart';
+import '../../data/user_data.dart';
+import '../../domain/user_usecases/signup.dart';
+import '../../domain/user_usecases/login.dart';
+import '../../domain/user_usecases/getUserById.dart';
 import '../presentation/user_notifier.dart';
 import '../presentation/user_state.dart';
 
 // Repository provider
 final userRepositoryProvider = Provider((ref) {
-  return UserRepository(DioClient() as Dio);
+  return UserRepository(DioClient());
 });
 
 // UseCases providers
@@ -39,10 +33,6 @@ final getUserByIdProvider = Provider((ref) {
   return GetUserById(ref.watch(userRepositoryProvider));
 });
 
-final updateUserProvider = Provider((ref) {
-  return UpdateUser(ref.watch(userRepositoryProvider));
-});
-
 final deleteUserProvider = Provider((ref) {
   return DeleteUser(ref.watch(userRepositoryProvider));
 });
@@ -59,7 +49,6 @@ final userNotifierProvider = StateNotifierProvider<UserNotifier, UserState>((ref
     forgotPassword: ref.watch(forgotPasswordProvider),
     resetPassword: ref.watch(resetPasswordProvider),
     getUserById: ref.watch(getUserByIdProvider),
-    updateUser: ref.watch(updateUserProvider),
     deleteUser: ref.watch(deleteUserProvider),
     logoutUser: ref.watch(logoutUserProvider),
   );

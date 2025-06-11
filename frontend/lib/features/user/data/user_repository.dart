@@ -9,14 +9,9 @@ class UserRepository implements UserRepositoryInterface {
   UserRepository(this._dio);
 
   @override
-  Future<UserModel> signUp(String username, String email, String password, String role) async {
+  Future<UserModel> signUp(Map<String, dynamic> userData) async {
     try {
-      final response = await _dio.post(ApiEndpoints.signup, data:{
-        'username': username,
-        'email': email,
-        'password': password,
-        'role': role,
-      });
+      final response = await _dio.post(ApiEndpoints.signup, data: userData);
       return UserModel.fromJson(response.data);
     } catch (e) {
       throw Exception('Failed to register user: $e');
@@ -62,10 +57,10 @@ class UserRepository implements UserRepositoryInterface {
   }
 
   @override
-  Future<UserModel> updateUser(int id, UserModel user) async {
+  Future<User> updateUser(int id, UserModel user) async {
     try {
       final response = await _dio.put(
-        ApiEndpoints.updateUser(id),
+        ApiEndpoints.updateUser,
         data: user.toJson(),
       );
       return UserModel.fromJson(response.data);

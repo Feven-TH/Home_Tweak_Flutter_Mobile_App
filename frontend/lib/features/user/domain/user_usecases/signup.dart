@@ -1,4 +1,3 @@
-import '../../data/user_model.dart';
 import '../user_repository_interface.dart';
 
 class SignUpUser {
@@ -6,7 +5,17 @@ class SignUpUser {
 
   SignUpUser(this.repository);
 
-  Future<UserModel> call(String username, String email, String password, String role) {
-    return repository.signUp(username, email, password, role);
+  Future<Map<String, dynamic>> call(
+      String username,
+      String email,
+      String password,
+      String role,
+      ) {
+    return repository.signUp(
+      username: username,
+      email: email,
+      password: password,
+      role: role,
+    );
   }
 }
