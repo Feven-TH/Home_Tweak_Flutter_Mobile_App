@@ -6,6 +6,6 @@ class LogoutUser {
   LogoutUser(this.repository);
 
   Future<void> call(int userId) {
-    return repository.logout(userId: userId);
+    return repository.logout(userId);
   }
 }

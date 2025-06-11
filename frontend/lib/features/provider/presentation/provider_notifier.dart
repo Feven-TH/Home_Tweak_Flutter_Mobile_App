@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/features/provider/data/provider_model.dart' as models;
 import '../domain/provider_usecases/create_provider.dart';
 import '../domain/provider_usecases/get_all_providers.dart';
 import '../domain/provider_usecases/update_provider.dart';
@@ -29,11 +30,10 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
   Future<void> createNewProvider(Provider provider) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final newProvider = await createProvider(provider);
+      final newProvider = await createProvider(provider as models.Provider);
       state = state.copyWith(
         providers: [...state.providers, newProvider],
         isLoading: false,
-        successMessage: 'Provider created successfully',
       );
     } catch (e) {
       state = state.copyWith(
@@ -69,7 +69,7 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
   Future<void> updateExistingProvider(int providerId, Provider provider) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final updatedProvider = await updateProvider(providerId, provider);
+      final updatedProvider = await updateProvider(providerId, provider as models.Provider);
       state = state.copyWith(
         providers: state.providers.map((p) =>
         p.id == providerId ? updatedProvider : p
@@ -78,7 +78,6 @@ class ProviderNotifier extends StateNotifier<ProviderState> {
             ? updatedProvider
             : state.selectedProvider,
         isLoading: false,
-        successMessage: 'Provider updated successfully',
       );
     } catch (e) {
       state = state.copyWith(

@@ -13,11 +13,11 @@ class ApiEndpoints {
 
   // Users
   static String getUserById(int id) => '/users/$id';
-  static const String updateUser(int id) => '/users/$id';
+  static String updateUser(int id) => '/users/$id';
 
   // Providers
   static const String createProvider = '/providers';
-  static const String updateProvider(int id) => '/providers/$id';
+  static String updateProvider(int id) => '/providers/$id';
   static const String getAllProviders = '/providers';
   static String getProvidersByCategory(int categoryId) => '/providers/category/$categoryId';
   static const String searchProvidersByName = '$baseUrl/providers/search';
