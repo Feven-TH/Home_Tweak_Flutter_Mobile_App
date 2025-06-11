@@ -5,12 +5,11 @@ class Booking {
   final DateTime serviceDate;
   final DateTime? bookingDate;
   final String status;
-  final DateTime? createdAt; // Added: For completeness, as seen in backend JSON
-  final DateTime? updatedAt; // Added: For completeness, as seen in backend JSON
-  final String?
-  providerName; // Added: Field for provider's username from backend
-  final String?
-  categoryName; // Added: Field for service category name from backend
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? customerUsername; // ADDED: Field for customer's username
+  final String? providerName;
+  final String? categoryName;
 
   Booking({
     this.id,
@@ -21,12 +20,12 @@ class Booking {
     this.status = 'Pending',
     this.createdAt,
     this.updatedAt,
+    this.customerUsername, // ADDED: Include in constructor
     this.providerName,
     this.categoryName,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
-    // Helper function to safely parse a DateTime
     DateTime? parseDateTime(dynamic value) {
       if (value is String) {
         return DateTime.tryParse(value);
@@ -43,6 +42,9 @@ class Booking {
       status: json['status'] as String? ?? 'Pending',
       createdAt: parseDateTime(json['createdAt']),
       updatedAt: parseDateTime(json['updatedAt']),
+      customerUsername: json['customer'] != null && json['customer']['username'] is String // CHANGED: Safely parse customerUsername
+          ? json['customer']['username'] as String
+          : null,
       providerName: json['providerName'] as String?,
       categoryName: json['categoryName'] as String?,
     );
@@ -55,8 +57,7 @@ class Booking {
       'providerId': providerId,
       'serviceDate': serviceDate.toIso8601String(),
       if (bookingDate != null) 'bookingDate': bookingDate!.toIso8601String(),
-      'status':
-          status, // Assuming status should always be sent or can be defaulted on backend
+      'status': status,
     };
   }
 }

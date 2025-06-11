@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
+import 'package:frontend/features/bookings/domain/booking_usecases/get_bookings_by_provider.dart';
 
 import '../../../core/dio_client.dart';
 import '../presentation/booking_notifier.dart';
@@ -43,13 +44,16 @@ final rescheduleBookingUseCaseProvider = Provider<RescheduleBooking>((ref) {
 final updateBookingStatusUseCaseProvider = Provider<UpdateBookingStatus>((ref) {
   return UpdateBookingStatus(ref.watch(bookingRepositoryProvider));
 });
-
+final fetchBookingsByProviderProvider = Provider<GetBookingsByProvider>((ref) {
+  return GetBookingsByProvider(ref.watch(bookingRepositoryProvider));
+});
 /// BookingNotifier provider using injected use cases
 final bookingNotifierProvider =
     StateNotifierProvider<BookingNotifier, BookingState>((ref) {
   return BookingNotifier(
     createBooking: ref.watch(createBookingUseCaseProvider),
     fetchBookingsByUserAndStatus: ref.watch(fetchBookingsByUserAndStatusProvider),
+    fetchBookingsByProvider: ref.watch(fetchBookingsByProviderProvider),
     cancelBooking: ref.watch(cancelBookingUseCaseProvider),
     rescheduleBooking: ref.watch(rescheduleBookingUseCaseProvider),
     updateBookingStatus: ref.watch(updateBookingStatusUseCaseProvider),

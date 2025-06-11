@@ -61,4 +61,14 @@ Future<Booking> createBooking(Booking booking) async {
       throw Exception('Failed to update booking status: $e');
     }
   }
+  @override
+  Future<List<Booking>> getBookingsByProvider(int providerId) async {
+    try {
+      final response = await _dio.get(ApiEndpoints.getBookingsByProvider(providerId));
+      final data = response.data as List;
+      return data.map((json) => Booking.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch bookings by provider: $e');
+    }
+  }
 }

@@ -26,23 +26,6 @@ const List<Category> mockCategories = [
   Category(id: 6, label: 'Gardener', iconPath: 'assets/images/gardner.png'),
 ];
 
-// Placeholder pages for bottom navigation (you'll replace these with your actual pages)
-class BookingsPage extends StatelessWidget {
-  const BookingsPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Bookings')), body: const Center(child: Text('Your Bookings Page')));
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Profile')), body: const Center(child: Text('Your Profile Page')));
-  }
-}
-
 // Your HomePage as a ConsumerStatefulWidget
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -91,18 +74,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     });
 
-    final List<Widget> pages = [
-      _buildHomePageContent(providerState, providerNotifier),
-      const BookingsPage(),
-      const ProfilePage(),
-    ];
-
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: IndexedStack(
-        index: _currentNavBarIndex,
-        children: pages,
-      ),
+      body: _buildHomePageContent(providerState, providerNotifier),
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
@@ -110,7 +84,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _buildHomePageContent(ProviderState providerState, ProviderNotifier providerNotifier) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0), 
+        padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -122,7 +96,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    // ignore: deprecated_member_use
                     color: AppColors.textPrimary.withOpacity(0.05),
                     spreadRadius: 1,
                     blurRadius: 3,
@@ -144,7 +117,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 onSubmitted: (query) {
                   if (query.isNotEmpty) {
                     providerNotifier.searchProviders(query);
-                    setState(() { _selectedCategoryId = null; });
+                    setState(() {
+                      _selectedCategoryId = null;
+                    });
                   } else {
                     providerNotifier.fetchAllProviders();
                   }
@@ -152,7 +127,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 onChanged: (query) {
                   if (query.isEmpty) {
                     providerNotifier.fetchAllProviders();
-                    setState(() { _selectedCategoryId = null; });
+                    setState(() {
+                      _selectedCategoryId = null;
+                    });
                   }
                 },
               ),
@@ -167,7 +144,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
             // 3. Horizontal Scrollable List of Category Items
             SizedBox(
-              height: 120, // Height for category items, adjust as needed
+              height: 120,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: mockCategories.length,
@@ -190,7 +167,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(height: 20),
 
-            // 4. "Top Rated" Heading (This will dynamically change based on filter/search)
+            // 4. "Top Rated" Heading
             Text(
               _searchController.text.isNotEmpty
                   ? 'Search Results'
@@ -199,7 +176,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(height: 16),
 
-            // 5. List of Providers (Expanded to fill remaining space)
+            // 5. List of Providers
             Expanded(
               child: _buildProviderList(providerState, providerNotifier),
             ),
@@ -209,7 +186,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  // Helper method to build the provider list based on state
   Widget _buildProviderList(ProviderState state, ProviderNotifier notifier) {
     if (state.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -243,10 +219,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     } else if (state.providers.isEmpty) {
       return const Center(
-          child: Text(
-        'No service providers found.',
-        style: AppTextStyles.body,
-      ));
+        child: Text(
+          'No service providers found.',
+          style: AppTextStyles.body,
+        ),
+      );
     } else {
       return ListView.builder(
         itemCount: state.providers.length,
@@ -256,7 +233,6 @@ class _HomePageState extends ConsumerState<HomePage> {
             provider: provider,
             onDetailsTap: () {
               notifier.fetchProviderDetails(provider.id);
-
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ProviderDetailsScreen(providerId: provider.id),
               ));
@@ -267,7 +243,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
   }
 
-  // Helper method for the Bottom Navigation Bar (using standard Navigator)
   Widget _buildBottomNavigationBar(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: _currentNavBarIndex,

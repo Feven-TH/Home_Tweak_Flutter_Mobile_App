@@ -32,4 +32,5 @@ class ApiEndpoints {
   static String cancelBooking(int bookingId) => '/bookings/$bookingId/cancel';
   static String rescheduleBooking(int bookingId) => '/bookings/reschedule/$bookingId';
   static String updateBookingStatus(int bookingId) => '/bookings/$bookingId/status';
+  static String getBookingsByProvider(int providerId) => '/bookings/provider/$providerId'; //added this  to get the bookings of the provider 
 }

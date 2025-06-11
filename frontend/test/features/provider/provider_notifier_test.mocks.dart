@@ -8,6 +8,8 @@ import 'dart:async' as _i5;
 import 'package:frontend/features/provider/data/provider_model.dart' as _i3;
 import 'package:frontend/features/provider/domain/provider_repository_interface.dart'
     as _i2;
+import 'package:frontend/features/provider/domain/provider_usecases/create_provider.dart'
+    as _i9;
 import 'package:frontend/features/provider/domain/provider_usecases/get_all_providers.dart'
     as _i4;
 import 'package:frontend/features/provider/domain/provider_usecases/get_provider_details.dart'
@@ -16,6 +18,8 @@ import 'package:frontend/features/provider/domain/provider_usecases/get_provider
     as _i6;
 import 'package:frontend/features/provider/domain/provider_usecases/search_providers_by_name.dart'
     as _i8;
+import 'package:frontend/features/provider/domain/provider_usecases/update_provider.dart'
+    as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -158,4 +162,64 @@ class MockSearchProvidersByName extends _i1.Mock
             returnValue: _i5.Future<List<_i3.Provider>>.value(<_i3.Provider>[]),
           )
           as _i5.Future<List<_i3.Provider>>);
+}
+
+/// A class which mocks [CreateProvider].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCreateProvider extends _i1.Mock implements _i9.CreateProvider {
+  MockCreateProvider() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.IProviderRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeIProviderRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.IProviderRepository);
+
+  @override
+  _i5.Future<_i3.Provider> call(_i3.Provider? provider) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [provider]),
+            returnValue: _i5.Future<_i3.Provider>.value(
+              _FakeProvider_1(this, Invocation.method(#call, [provider])),
+            ),
+          )
+          as _i5.Future<_i3.Provider>);
+}
+
+/// A class which mocks [UpdateProvider].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdateProvider extends _i1.Mock implements _i10.UpdateProvider {
+  MockUpdateProvider() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.IProviderRepository get repository =>
+      (super.noSuchMethod(
+            Invocation.getter(#repository),
+            returnValue: _FakeIProviderRepository_0(
+              this,
+              Invocation.getter(#repository),
+            ),
+          )
+          as _i2.IProviderRepository);
+
+  @override
+  _i5.Future<_i3.Provider> call(int? id, _i3.Provider? provider) =>
+      (super.noSuchMethod(
+            Invocation.method(#call, [id, provider]),
+            returnValue: _i5.Future<_i3.Provider>.value(
+              _FakeProvider_1(this, Invocation.method(#call, [id, provider])),
+            ),
+          )
+          as _i5.Future<_i3.Provider>);
 }

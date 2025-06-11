@@ -88,4 +88,12 @@ class MockIBookingRepository extends _i1.Mock
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
           as _i4.Future<void>);
+
+  @override
+  _i4.Future<List<_i2.Booking>> getBookingsByProvider(int? providerId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getBookingsByProvider, [providerId]),
+            returnValue: _i4.Future<List<_i2.Booking>>.value(<_i2.Booking>[]),
+          )
+          as _i4.Future<List<_i2.Booking>>);
 }

@@ -11,7 +11,8 @@ const Category = require('./category');
 Provider.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // ADDED: as: 'user'
 Provider.belongsTo(Category, { foreignKey: 'categoryId', as: 'categoryData' }); // ADDED: as: 'categoryData'
 
-Booking.belongsTo(User, { foreignKey: 'userId' });
+// Booking.belongsTo(User, { foreignKey: 'userId' });
+Booking.belongsTo(User, { foreignKey: 'userId', as: 'customer' }); // <--- ADD THIS alias!
 Booking.belongsTo(Provider, { foreignKey: 'providerId' });
 
 User.hasMany(Provider, { foreignKey: 'userId' });

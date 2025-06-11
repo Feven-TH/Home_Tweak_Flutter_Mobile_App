@@ -31,10 +31,20 @@ exports.getBookingsByProvider = async (req, res) => {
     try {
         const providerId = req.params.providerId;
         const bookings = await Booking.findAll({
-            where: { providerId }
+            where: { providerId },
+            // This is the new part: including the User model
+            include: [
+                {
+                    model: User, 
+                    as: 'customer',
+                                  
+                    attributes: ['username']
+                }
+            ]
         });
         res.status(200).json(bookings);
     } catch (error) {
+        console.error("Error getting bookings by provider:", error); 
         res.status(500).json({ error: error.message });
     }
 };

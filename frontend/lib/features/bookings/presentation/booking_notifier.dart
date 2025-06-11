@@ -8,10 +8,12 @@ import '../domain/booking_usecases/cancel_bookings.dart';
 import '../domain/booking_usecases/get_bookings.dart';
 import '../domain/booking_usecases/reschedule_booking.dart';
 import '../domain/booking_usecases/update_booking_status.dart';
+import '../domain/booking_usecases/get_bookings_by_provider.dart';
 
 class BookingNotifier extends StateNotifier<BookingState> {
   final CreateBooking _createBooking;
   final GetBookingsByUserAndStatus  _fetchBookingsByUserAndStatus;
+  final GetBookingsByProvider _fetchBookingsByProvider;
   final CancelBooking _cancelBooking;
   final RescheduleBooking _rescheduleBooking;
   final UpdateBookingStatus _updateBookingStatus;
@@ -19,11 +21,13 @@ class BookingNotifier extends StateNotifier<BookingState> {
   BookingNotifier({
     required CreateBooking createBooking,
     required GetBookingsByUserAndStatus fetchBookingsByUserAndStatus,
+    required GetBookingsByProvider fetchBookingsByProvider, 
     required CancelBooking cancelBooking,
     required RescheduleBooking rescheduleBooking,
     required UpdateBookingStatus updateBookingStatus,
   })  : _createBooking = createBooking,
         _fetchBookingsByUserAndStatus = fetchBookingsByUserAndStatus,
+         _fetchBookingsByProvider = fetchBookingsByProvider,  
         _cancelBooking = cancelBooking,
         _rescheduleBooking = rescheduleBooking,
         _updateBookingStatus = updateBookingStatus,
@@ -78,4 +82,13 @@ class BookingNotifier extends StateNotifier<BookingState> {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }
+  Future<void> loadBookingsByProvider(int providerId) async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final bookings = await _fetchBookingsByProvider(providerId);
+      state = state.copyWith(bookings: bookings, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(error: e.toString(), isLoading: false);
+    }
+}
 }
