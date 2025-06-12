@@ -25,6 +25,20 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     final state = ref.watch(userNotifierProvider);
     final notifier = ref.read(userNotifierProvider.notifier);
 
+    // Listen for error or success and show SnackBars
+    ref.listen(userNotifierProvider, (previous, next) {
+      if (next.error != null && next.error != previous?.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.error!), backgroundColor: Colors.red),
+        );
+      }
+      if (next.successMessage != null && next.successMessage != previous?.successMessage) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.successMessage!), backgroundColor: Colors.green),
+        );
+      }
+    });
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF9F5),
       appBar: AppBar(
@@ -53,25 +67,27 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               const SizedBox(height: 16),
               const Text(
                 'Enter your email address and we\'ll send you a link to reset your password.',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF4F5255)),
+                style: TextStyle(fontSize: 16, color: Color(0xFF4F5255)),
               ),
               const SizedBox(height: 32),
               TextFormField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
                 decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: const Icon(Icons.email),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  hintText: 'Enter your email address',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  if (!value.contains('@')) {
+                  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                  if (!emailRegex.hasMatch(value)) {
                     return 'Please enter a valid email';
                   }
                   return null;
@@ -95,10 +111,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   onPressed: state.isLoading
                       ? null
                       : () async {
-                    if (_formKey.currentState!.validate()) {
-                      await notifier.sendPasswordResetCode(_emailController.text.trim());
-                    }
-                  },
+                          if (_formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus(); // Hide keyboard
+                            await notifier.sendPasswordResetCode(_emailController.text.trim());
+                          }
+                        },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: const Color(0xFFFF6B00),
@@ -109,9 +126,9 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   child: state.isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
-                    'Send Reset Link',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                          'Send Reset Link',
+                          style: TextStyle(fontSize: 18),
+                        ),
                 ),
               ),
             ],
